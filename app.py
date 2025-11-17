@@ -71,9 +71,90 @@ st.plotly_chart(fig_pred, use_container_width=True)
 if mostrar_graficas:
     st.subheader("📊 Análisis visual del dataset")
 
-    # Distribución de la variable objetivo
-    fig_dist = px.histogram(df, x="GradeClass", nbins=20, title="Distribución de Calificaciones (GradeClass)",
-                            color_discrete_sequence=["#636EFA"])
+    # ======================================================
+    # 1. DISTRIBUCIÓN DE LA EDAD
+    # ======================================================
+    fig_age = px.histogram(
+        df,
+        x="Age",
+        nbins=15,
+        title="Distribución de la Edad de los Estudiantes",
+        color_discrete_sequence=["#EF553B"]
+    )
+    fig_age.update_layout(
+        xaxis_title="Edad",
+        yaxis_title="Cantidad de estudiantes"
+    )
+    st.plotly_chart(fig_age, use_container_width=True)
+
+    # ======================================================
+    # 2. DISTRIBUCIÓN DEL GÉNERO
+    # ======================================================
+    df_gender = df.copy()
+    df_gender["GenderLabel"] = df_gender["Gender"].map({
+        0: "0 - Male (Hombre)",
+        1: "1 - Female (Mujer)"
+    })
+
+    fig_gender = px.histogram(
+        df_gender,
+        x="GenderLabel",
+        title="Distribución por Género",
+        color_discrete_sequence=["#00CC96"]
+    )
+    fig_gender.update_layout(
+        xaxis_title="Género",
+        yaxis_title="Cantidad de estudiantes"
+    )
+    st.plotly_chart(fig_gender, use_container_width=True)
+
+    # ======================================================
+    # 3. NIVEL EDUCATIVO DE LOS PADRES (ORDENADO 0 → 4)
+    # ======================================================
+    df_parentedu = df.copy()
+    df_parentedu["ParentalEducationLabel"] = df_parentedu["ParentalEducation"].map({
+        0: "0 - None",
+        1: "1 - High School",
+        2: "2 - Some College",
+        3: "3 - Bachelor's",
+        4: "4 - Higher"
+    })
+
+    orden_categorias = [
+        "0 - None",
+        "1 - High School",
+        "2 - Some College",
+        "3 - Bachelor's",
+        "4 - Higher"
+    ]
+
+    fig_parentedu = px.histogram(
+        df_parentedu,
+        x="ParentalEducationLabel",
+        category_orders={"ParentalEducationLabel": orden_categorias},
+        title="Distribución del Nivel Educativo de los Padres",
+        color_discrete_sequence=["#AB63FA"]
+    )
+    fig_parentedu.update_layout(
+        xaxis_title="Nivel educativo de los padres",
+        yaxis_title="Cantidad de estudiantes"
+    )
+    st.plotly_chart(fig_parentedu, use_container_width=True)
+
+    # ======================================================
+    # 4. DISTRIBUCIÓN DE LA VARIABLE OBJETIVO (GRADECLASS)
+    # ======================================================
+    fig_dist = px.histogram(
+        df,
+        x="GradeClass",
+        nbins=20,
+        title="Distribución de Calificaciones (GradeClass)",
+        color_discrete_sequence=["#636EFA"]
+    )
+    fig_dist.update_layout(
+        xaxis_title="Clase de calificación (GradeClass)",
+        yaxis_title="Cantidad de estudiantes"
+    )
     st.plotly_chart(fig_dist, use_container_width=True)
 
 # --- Información del modelo ---
