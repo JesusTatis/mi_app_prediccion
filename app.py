@@ -71,20 +71,6 @@ st.plotly_chart(fig_pred, use_container_width=True)
 if mostrar_graficas:
     st.subheader("📊 Análisis visual del dataset")
 
-    # Gráfico de correlación
-    corr = df.corr(numeric_only=True)
-    fig_corr = px.imshow(corr, text_auto=True, color_continuous_scale="RdBu_r", title="Mapa de correlación entre variables")
-    st.plotly_chart(fig_corr, use_container_width=True)
-
-    # Importancia de variables (solo Random Forest)
-    if modelo == "Random Forest":
-        importances = model.feature_importances_
-        feature_imp = pd.DataFrame({"Variable": X.columns, "Importancia": importances}).sort_values(by="Importancia", ascending=False)
-        fig_imp = px.bar(feature_imp, x="Importancia", y="Variable", orientation="h",
-                         title="Importancia de las Variables en el Modelo Random Forest",
-                         color="Importancia", color_continuous_scale="Blues")
-        st.plotly_chart(fig_imp, use_container_width=True)
-
     # Distribución de la variable objetivo
     fig_dist = px.histogram(df, x="GradeClass", nbins=20, title="Distribución de Calificaciones (GradeClass)",
                             color_discrete_sequence=["#636EFA"])
