@@ -67,13 +67,11 @@ fig_pred.update_layout(
 )
 st.plotly_chart(fig_pred, use_container_width=True)
 
-# --- Análisis visual adicional ---
+# --- Análisis visual ---
 if mostrar_graficas:
     st.subheader("📊 Análisis visual del dataset")
 
-    # ======================================================
     # 1. DISTRIBUCIÓN DE LA EDAD
-    # ======================================================
     fig_age = px.histogram(
         df,
         x="Age",
@@ -87,9 +85,7 @@ if mostrar_graficas:
     )
     st.plotly_chart(fig_age, use_container_width=True)
 
-    # ======================================================
     # 2. DISTRIBUCIÓN DEL GÉNERO
-    # ======================================================
     df_gender = df.copy()
     df_gender["GenderLabel"] = df_gender["Gender"].map({
         0: "0 - Male (Hombre)",
@@ -108,9 +104,7 @@ if mostrar_graficas:
     )
     st.plotly_chart(fig_gender, use_container_width=True)
 
-    # ======================================================
     # 3. NIVEL EDUCATIVO DE LOS PADRES (ORDENADO 0 → 4)
-    # ======================================================
     df_parentedu = df.copy()
     df_parentedu["ParentalEducationLabel"] = df_parentedu["ParentalEducation"].map({
         0: "0 - None",
@@ -141,9 +135,7 @@ if mostrar_graficas:
     )
     st.plotly_chart(fig_parentedu, use_container_width=True)
 
-    # ======================================================
     # 4. DISTRIBUCIÓN DE LA VARIABLE OBJETIVO (GRADECLASS)
-    # ======================================================
     fig_dist = px.histogram(
         df,
         x="GradeClass",
